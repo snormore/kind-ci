@@ -5,17 +5,17 @@ jobs:
     - stage: Tests
       before_script:
         # Install KinD
-        - curl -Lo kind https://github.com/kubernetes-sigs/kind/releases/download/0.0.1/kind-linux-amd64 && \
-          chmod +x kind && \
+        - curl -Lo kind https://github.com/kubernetes-sigs/kind/releases/download/0.0.1/kind-linux-amd64 &&
+          chmod +x kind &&
           sudo mv kind /usr/local/bin/
         
         # Create Kubernetes Cluster
-        - kind create cluster && \
+        - kind create cluster &&
           export KUBECONFIG="$(kind get kubeconfig-path)"
         
         # Install kubectl
-        - curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.12.0/bin/linux/amd64/kubectl && \
-          chmod +x kubectl && \
+        - curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.12.0/bin/linux/amd64/kubectl &&
+          chmod +x kubectl &&
           sudo mv kubectl /usr/local/bin/
       script: |
         kubectl cluster-info
