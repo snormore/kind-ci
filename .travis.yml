@@ -5,7 +5,7 @@ jobs:
     - stage: Tests
       before_script:
         # Install KinD
-        - curl -Lo kind https://github.com/kubernetes-sigs/kind/releases/download/0.0.1/kind-linux-amd64 &&
+        - curl -Lo kind https://github.com/kubernetes-sigs/kind/releases/download/0.1.0/kind-linux-amd64 &&
           chmod +x kind &&
           sudo mv kind /usr/local/bin/
         
