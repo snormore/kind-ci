@@ -11,9 +11,20 @@ before_script:
     docker version
 
   # Install KinD
-  - curl -Lo kind https://github.com/kubernetes-sigs/kind/releases/download/0.1.0/kind-linux-amd64 &&
-    chmod +x kind &&
-    mv kind /usr/local/bin/
+  # - curl -Lo kind https://github.com/kubernetes-sigs/kind/releases/download/0.1.0/kind-linux-amd64 &&
+  #   chmod +x kind &&
+  #   mv kind /usr/local/bin/
+  - curl -O https://storage.googleapis.com/golang/go1.11.2.linux-amd64.tar.gz &&
+    tar -xf go1.11.2.linux-amd64.tar.gz &&
+    mv go /usr/local &&
+    export GOPATH=$HOME/go &&
+    export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+  - go get -u sigs.k8s.io/kind && \
+    cd $GOPATH/src/sigs.k8s.io/kind && \
+    git remote add snormore https://github.com/snormore/kind.git && \
+    git fetch snormore/net-host && \
+    git checkout net-host && \
+    go build -o $GOPATH/bin/kind
   
   # Create Kubernetes Cluster
   - kind create cluster --loglevel debug
