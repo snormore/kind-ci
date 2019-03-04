@@ -22,8 +22,8 @@ before_script:
   - go get -u sigs.k8s.io/kind &&
     cd $GOPATH/src/sigs.k8s.io/kind &&
     git remote add snormore https://github.com/snormore/kind.git &&
-    git fetch snormore/net-host &&
-    git checkout net-host &&
+    git fetch snormore net-host &&
+    git checkout snormore/net-host &&
     go build -o $GOPATH/bin/kind
   
   # Create Kubernetes Cluster
