@@ -20,6 +20,8 @@ before_script:
 
 test:
   script:
+    - ls -alh ./tmp/kube
+    - cat $(pwd)/tmp/kube/config
     - export KUBECONFIG="$(pwd)/tmp/kube/config"
     - kubectl cluster-info
     - kubectl get pods --all-namespaces
