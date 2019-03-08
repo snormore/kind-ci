@@ -4,8 +4,7 @@ services:
   - docker:dind
 
 before_script:
-  - apt-get update -qq &&
-    apt-get install curl
+  - apk add curl
 
   # Install docker-compose
   - curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose &&
