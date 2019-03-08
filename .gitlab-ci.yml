@@ -4,13 +4,11 @@ services:
   - docker:dind
 
 before_script:
-  - apk add curl
+  - apk update &&
+    apk add curl py-pip
 
   # Install docker-compose
-  - curl -Lo docker-compose https://github.com/docker/compose/releases/download/1.18.0/docker-compose-$(uname -s)-$(uname -m) &&
-    chmod +x docker-compose &&
-    ./docker-compose version &&
-    mv docker-compose /usr/local/bin/
+  - pip install docker-compose
 
   # Setup the KinD cluster
   - docker-compose up -d
