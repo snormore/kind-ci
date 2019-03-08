@@ -12,6 +12,7 @@ before_script:
 
   # Setup the KinD cluster
   - docker-compose up -d
+  - docker-compose logs kind
 
   # Install kubectl
   - curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.12.0/bin/linux/amd64/kubectl &&
