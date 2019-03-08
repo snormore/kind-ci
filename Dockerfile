@@ -9,4 +9,4 @@ RUN curl -Lo kind https://github.com/kubernetes-sigs/kind/releases/download/${KI
 # Set up the entrypoint.
 ADD entrypoint.sh /usr/local/bin/wrapkind
 ENTRYPOINT ["wrapkind"]
-CMD ["sleep", "infinity"]
+CMD ["/bin/bash"]
