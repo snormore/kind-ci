@@ -7,13 +7,13 @@ before_script:
   - apk add curl
 
   # Install docker-compose
-  - set -x &&
-    curl -Lo docker-compose https://github.com/docker/compose/releases/download/1.18.0/docker-compose-$(uname -s)-$(uname -m) &&
+  - curl -Lo docker-compose https://github.com/docker/compose/releases/download/1.18.0/docker-compose-$(uname -s)-$(uname -m) &&
     chmod +x docker-compose &&
+    sh docker-compose version &&
     mv docker-compose /usr/local/bin/
 
   # Setup the KinD cluster
-  - /usr/local/bin/docker-compose up -d
+  - docker-compose up -d
 
   # Install kubectl
   - curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.12.0/bin/linux/amd64/kubectl &&
