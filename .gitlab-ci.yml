@@ -1,38 +1,16 @@
+image: docker
+
 services:
   - docker:dind
 
 before_script:
-  # Install Docker Client
-  - DOCKER_VERSION="17.03.0-ce" &&
-    curl -L -o /tmp/docker-$DOCKER_VERSION.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$DOCKER_VERSION.tgz &&
-    tar -xz -C /tmp -f /tmp/docker-$DOCKER_VERSION.tgz &&
-    mv /tmp/docker/* /usr/bin
-  - export DOCKER_HOST=tcp://docker:2375 &&
-    docker version
+  # Install docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose &&
+    chmod +x /usr/local/bin/docker-compose
 
-  # Install KinD
-  # - curl -Lo kind https://github.com/kubernetes-sigs/kind/releases/download/0.1.0/kind-linux-amd64 &&
-  #   chmod +x kind &&
-  #   mv kind /usr/local/bin/
-  - curl -O https://storage.googleapis.com/golang/go1.11.2.linux-amd64.tar.gz &&
-    tar -xf go1.11.2.linux-amd64.tar.gz &&
-    mv go /usr/local &&
-    export GOPATH=$HOME/go &&
-    export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
-  - go get -u sigs.k8s.io/kind &&
-    cd $GOPATH/src/sigs.k8s.io/kind &&
-    git remote add snormore https://github.com/snormore/kind.git &&
-    git fetch snormore net-host &&
-    git checkout snormore/net-host &&
-    go build -o $GOPATH/bin/kind
-  
-  # Create Kubernetes Cluster
-  - kind create cluster --loglevel debug
-  #  --retain
-  # - kind export logs logs && 
-  #   cat logs/docker-info.txt &&
-  #   tail logs/kind-control-plane/kubelet.log
-  
+  # Setup the KinD cluster
+  - docker-compose up -d
+
   # Install kubectl
   - curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.12.0/bin/linux/amd64/kubectl &&
     chmod +x kubectl &&
@@ -40,6 +18,6 @@ before_script:
 
 test:
   script:
-    - export KUBECONFIG="$(kind get kubeconfig-path)"
+    - export KUBECONFIG="$(pwd)/tmp/kube/config"
     - kubectl cluster-info
     - kubectl get pods --all-namespaces

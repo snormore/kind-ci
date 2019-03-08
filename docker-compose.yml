@@ -1,0 +1,8 @@
+version: '3'
+services:
+  kind:
+    build: .
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./tmp/kube:/root/.kube
+    # network_mode: host
