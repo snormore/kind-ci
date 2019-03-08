@@ -7,7 +7,8 @@ before_script:
   - apk add curl
 
   # Install docker-compose
-  - curl -Lo docker-compose https://github.com/docker/compose/releases/download/1.18.0/docker-compose-$(uname -s)-$(uname -m) &&
+  - set -x &&
+    curl -Lo docker-compose https://github.com/docker/compose/releases/download/1.18.0/docker-compose-$(uname -s)-$(uname -m) &&
     chmod +x docker-compose &&
     mv docker-compose /usr/local/bin/
 
